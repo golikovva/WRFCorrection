@@ -1,0 +1,39 @@
+title,article,ref,lat,lon,tz,height,type,id,tslist
+Arkhangelsk,in,Arkhangelsk,64.53333333,40.56666667,+03:00,1,synop,22550,Arkhangelsk
+Sabetta (airport),in,"Sabetta_(airport),_METAR",71.2156,72.0462,+05:00,5,metar,8522,Sabetta
+Murmashi (airport),in,Murmashi_(airport),68.7838,32.7559,+03:00,48,synop,22115,Murmashi
+Seyakha,in,Seyakha,70.16666667,72.51666667,+05:00,16,synop,20967,Seyakha
+# Arkhangelsk (airport),"Arkhangelsk_(airport),_METAR",64.6,40,+03:00,19,metar,4964,ArkA
+Imeni Popova Station,at,Imeni_Popova_Station,73.333334,70.05,+05:00,6,synop,20667,PopovaSt
+Amderma,in,Amderma,69.7644,61.6853,+03:00,55,synop,23022,Amderma
+Malye Karmakuly,in,Malye_Karmakuly,72.3666667,52.7,+03:00,16,synop,20744,MKarmakuly
+Marresale,in,Marresale,69.71666667,66.8,+05:00,25,synop,23032,Marresale
+Kanin Nos (cape),on,Kanin_Nos_(cape),68.65,43.3,+03:00,49,synop,22165,KaninNos
+Bugrino,in,Bugrino,68.8,49.16,+03:00,11,synop,22193,Bugrino
+Ust-Kara,in,Ust-Kara,69.25,64.9666667,+03:00,4,synop,23029,UstKara
+Varandey,in,Varandey,68.8,58.0,+03:00,5,synop,23112,Varandey
+Konstantinovsky (cape),in,Konstantinovsky_(cape),68.55,55.5,+03:00,7,synop,23114,Konstantinovsky
+Khodovarikha,in,Khodovarikha,68.93333,53.7666667,+03:00,9,synop,23103,Khodovarikha
+Sengeysky Shar,in,Sengeysky_Shar,68.35,50.783333,+03:00,4,synop,23104,SengShar
+Indiga,in,Indiga,67.65,49.03333,+03:00,1,synop,22292,Indiga
+Mikulkin (cape),in,Mikulkin_(cape),67.8,46.666667,+03:00,6,synop,22282,Mikulkin
+Shoyna,in,Shoyna,67.883333,44.13333,+03:00,16,synop,22271,Shoyna
+Nes,in,Nes,66.65,44.683333,+03:00,14,synop,22375,Nes
+Abramovskiy (lighthouse),in,Abramovskiy_(lighthouse),66.38333,43.25,+03:00,24,synop,22365,Abramovskiy
+Morzhovets Island,on,Morzhovets_Island,66.75,42.583333,+03:00,15,synop,22361,Morzhovets
+Zimnegorskiy (lighthouse),in,Zimnegorskiy_(lighthouse),65.466667,39.733333,+03:00,81,synop,22446,Zimnegorskiy
+Mudyug,in,Mudyug,64.85,40.283333,+03:00,3,synop,22551,Mudyug
+Severodvinsk,in,Severodvinsk,64.566667,39.833333,+03:00,1,synop,22546,SevDvinsk
+Kepino,in,Kepino,65.38333,41.83333,+03:00,74,synop,22456,Kepino
+Mezen,in,Mezen,65.85,44.233333,+03:00,11,synop,22471,Mezen
+Nizhnyaya Pesha,in,Nizhnyaya_Pesha,66.75,47.766667,+03:00,7,synop,22383,NizhPesha
+Naryan-Mar,in,Naryan-Mar,67.666667,53.083333,+03:00,3,synop,23205,NMar
+Kanevka,in,Kanevka,67.13333,39.666667,+03:00,149,synop,22249,Kanevka
+Pyalitsa,in,Pyalitsa,66.18333,39.5333,+03:00,8,synop,22349,Pyalitsa
+Chavanga,in,Chavanga,66.1,37.816667,+03:00,7,synop,22339,Chavanga
+Varzuga,in,Varzuga,66.4,36.616667,+03:00,6,synop,22334,Varzuga
+Krasnoshchelye,in,Krasnoshchelye,67.35,37.05,+03:00,155,synop,22235,Krasnoshchelye
+Teriberka,in,Teriberka,69.2,35.1166667,+03:00,29,synop,22028,Teriberka
+Polarny,in,Polarny,69.2,33.4804,+03:00,13,synop,22019,Polarny
+Murmansk,in,Murmansk,68.95,33.1,+03:00,57,synop,22113,Murmansk
+
