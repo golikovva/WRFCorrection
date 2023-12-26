@@ -2,7 +2,7 @@
 Для запуска обучения алгоритма коррекции прогнозов численной модели wrf в директории `./experiments/train_test/` запускаем файл `main.py`
 
 ```sh
-cd /path/to/project/dir/experiments/constantBaseline
+cd /path/to/project/dir/experiments/train_test
 python main.py
 ```
 
