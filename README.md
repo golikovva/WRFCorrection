@@ -1,79 +1,75 @@
-### Introduction
-This repo has implemented a pytorch-based encoder-forecaster model with RNNs including (TrajGRU, ConvLSTM) to do precipitation nowcasting. For more information about TrajGRU, please refer to [HKO-7](https://github.com/sxjscience/HKO-7).
+# WRF Correctiom
+Для запуска обучения алгоритма коррекции прогнозов численной модели wrf в директории `./experiments/train_test/` запускаем файл `main.py`
 
-If you are interested in my implementation of ConvLSTM and TrajGRU, please see [ConvLSTM](https://github.com/Hzzone/Precipitation-Nowcasting/blob/master/nowcasting/models/convLSTM.py) and [TrajGRU](https://github.com/Hzzone/Precipitation-Nowcasting/blob/master/nowcasting/models/trajGRU.py). It is assumed that the input shape should be <img src="https://latex.codecogs.com/gif.latex?S*B*C*H*W" title="S*B*C*H*W" />. All of my implementation have been proved to be effective in HKO-7 Dataset. Hopefully it helps your research.
-
-### Train
-Firstly you should apply for HKO-7 Dataset from [HKO-7](https://github.com/sxjscience/HKO-7), and modify somelines in config.py to find the dataset path.
-Secondly and last, run `python3 experiments/trajGRU_balanced_mse_mae/main.py`, and then run `python3 experiments/trajGRU_frame_weighted_mse/main.py` since I have finetuned the model on the basis of model trained in last step.
-
-### Environment
-Python 3.6+, PyTorch 1.0 and Ubuntu or macOS.
-
-### Demo
-![](demo.gif)
-
-### Performance
-The performance on HKO-7 dataset is below.
-
-<table>
-	<tbody>
-		<tr>
-			<td colspan="5" align="center">CSI</td>
-			<td colspan="5" align="center">HSS</td>
-			<td align="center">Balanced MSE</td>
-			<td align="center">Balanced MAE</td>
-		</tr>
-		<tr>
-			<td  align="center"><img src="https://latex.codecogs.com/gif.latex?r&space;\geq&space;0.5" title="r \geq 0.5" /></td>
-			<td align="center"><img src="https://latex.codecogs.com/gif.latex?r&space;\geq&space;2" title="r \geq 2" /></td>
-			<td align="center"><img src="https://latex.codecogs.com/gif.latex?r&space;\geq&space;5" title="r \geq 5" /></td>
-			<td align="center"><img src="https://latex.codecogs.com/gif.latex?r&space;\geq&space;10" title="r \geq 10" /></td>
-			<td align="center"><img src="https://latex.codecogs.com/gif.latex?r&space;\geq&space;30" title="r \geq 30" /></td>
-			<td align="center"><img src="https://latex.codecogs.com/gif.latex?r&space;\geq&space;0.5" title="r \geq 0.5" /></td>
-			<td align="center"><img src="https://latex.codecogs.com/gif.latex?r&space;\geq&space;2" title="r \geq 2" /></td>
-			<td align="center"><img src="https://latex.codecogs.com/gif.latex?r&space;\geq&space;5" title="r \geq 5" /></td>
-			<td align="center"><img src="https://latex.codecogs.com/gif.latex?r&space;\geq&space;10" title="r \geq 10" /></td>
-			<td align="center"><img src="https://latex.codecogs.com/gif.latex?r&space;\geq&space;30" title="r \geq 30" /></td>
-			<td align="center"></td>
-			<td align="center"></td>
-		</tr>
-		<tr>
-			<td align="center">0.5496</td>
-			<td align="center">0.4772</td>
-			<td align="center">0.3774</td>
-			<td align="center">0.2863</td>
-			<td align="center">0.1794</td>
-			<td align="center">0.6713</td>
-			<td align="center">0.6150</td>
-			<td align="center">0.5226</td>
-			<td align="center">0.4253</td>
-			<td align="center">0.2919</td>
-			<td align="center">5860.97</td>
-			<td align="center">15062.46</td>
-		</tr>
-	</tbody>
-</table>
-
-### Download
-
-[Dropbox Pretrained Model](https://www.dropbox.com/sh/i5goltdq83dmkvc/AABBe5wTuEQF5j3VSMszVQSaa?dl=0)
-
-### Citation
-
+```sh
+cd /path/to/project/dir/experiments/constantBaseline
+python main.py
 ```
-@inproceedings{xingjian2017deep,
-    title={Deep learning for precipitation nowcasting: a benchmark and a new model},
-    author={Shi, Xingjian and Gao, Zhihan and Lausen, Leonard and Wang, Hao and Yeung, Dit-Yan and Wong, Wai-kin and Woo, Wang-chun},
-    booktitle={Advances in Neural Information Processing Systems},
-    year={2017}
-}
-@inproceedings{xingjian2015convolutional,
-  title={Convolutional LSTM network: A machine learning approach for precipitation nowcasting},
-  author={Xingjian, SHI and Chen, Zhourong and Wang, Hao and Yeung, Dit-Yan and Wong, Wai-Kin and Woo, Wang-chun},
-  booktitle={Advances in neural information processing systems},
-  pages={802--810},
-  year={2015}
-}
+
+Для удачного запуска в переменных `wrf_folder` и `wrf_folder` укажите актуальные директории с данными WRF и ERA5. 
+Также в файле `correction/config.py` укажите актуальный путь к проекту:
+```python
+__C.GLOBAL.BASE_DIR = 'path to project'
 ```
+## Docker
+Проект можно запустить внутри Docker контейнера. В проекте есть Dockerfile для сброки небходимого образа. В случае пользования docker путь к данным менять не нужно
+
+```sh
+cd /path/to/project
+docker build ./ -t baseline_wrf_correction 
+docker run -it --rm --name correction_baseline \
+	-v /path/to/wrf/files/.:/home/wrf_data \
+	-v /path/to/era5/files/.:/home/era_data \
+	-v $(pwd)/logs/.:/home/logs \
+	--gpus device=0 --ipc=host golikov_wrf_correction
+```
+
+Оказавшись таким образом внутри контейнера запускаем скрипт с обучением, указав необходимые аргументы:
+```sh
+python main.py --run-mode train --use-spatiotemporal-encoding 1 --use-time-encoding 1 -b 10 --running-env docker --model BERTunet
+```
+## Метрика качества и функция потерь
+![plot](./model.jpg)
+
+Функция ошибки - сумма двух слагаемых. Первое $MSE(WRF, ERA5)$ отвечает за уменьшение статистического отклонения, второе $L_{dev}$ - за сохранение мелкомасштабной динамики.
+
+$$L_{dev} = (\delta WRF_{corr} - \delta WRF)^2,$$
+где $$\delta WRF = WRF - conv2d(WRF, k)$$, а k - единичное ядро
+
+Итоговая функция ошибки выглядит так:
+$$Loss = MSE(WRF, ERA5) + L_{dev}$$
+
+**Метрика качества - уменьшение Loss относительно нескорректированного примера:**
+$$M = max(\frac{Loss(WRF_{orig})-Loss(WRF_{corr})}{Loss(WRF_{orig})}, 0)$$
+
+## Данные 
+Для обучения предоставлены данные численного моделирования атмосферы WRF за год, а также данные реанализа ERA5 в том же домене за то же время. Для тестирования будут использованы небольшие выборки по 25 сэмплов данных для каждого сезона года.
+
+Датасет состоит из двух наборов массивов пространственно-временных рядов: 
+1) Прогноз численной модели погоды WRF. Именно его нужно скорректировать. Это набор файлов, каждый из которых - numpy массив размера (24, 3, 210, 280)
+	+ 24 - прогноз делается на каждый час суток. дата указана в имени файла
+	+ 3 - каналы данных, (u10, v10, t2) - скорость ветра по широте и долготе на высоте 10 метров и температура на 2х метрах
+	+ 210, 280 - размер домена в котором считается прогноз (то же самое, что h и w в цифровых изображениях)
+
+2) ERA5 данные реанализа - грубо говоря, это данные наблюдений, разглаженные на сетку. Относительно этого реанализа предлагается скорректировать прогноз. Это набор файлов, каждый из которых - numpy массив размера (24, 3, 67, 215)
+	+ 24 - реанализ также считается каждый час суток. дата указана в имени файла
+	+ 3 - те же каналы данных, (u10, v10, t2) - скорость ветра по широте и долготе на 10 метрах и температура на 2х метрах
+	+ 210, 280 - размер домена в котором проведен реанализ. 
+
+Сетки на которых расчитываются эти данные не согласованы! 
++ ERA5 считается на географической сетке с разрешением 0.25 градусов.
++ WRF же считается на кастомной сетке более высокого разрешения в 6 км (это видно по размерам массивов (210, 280) vs (67, 215)).
+![plot](./grid_comparison_full.png)
+
+## Полезные ссылки
+
+Для более подробного ознакомления, с какими данными мы работаем, можно пройти по следующим ссылкам:
+
+- [ERA5] - Ссылка на официальный сайт ERA5 (нужен VPN) 
+- [WRF] - Ссылка на официальный сайт WRF 
+
+
+
+   [ERA5]: <https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-single-levels?tab=overview>
+   [WRF]: <https://www.mmm.ucar.edu/models/wrf>
 
