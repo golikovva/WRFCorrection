@@ -45,7 +45,8 @@ __C.MODEL.RNN_ACT_TYPE = activation('leaky', negative_slope=0.2, inplace=True)
 __C.run_config = edict()
 __C.run_config.epochs = args.epochs
 __C.run_config.batch_size = args.batch_size
-__C.run_config.beta = args.beta
+__C.run_config.beta1 = args.beta1
+__C.run_config.beta2 = args.beta2
 __C.run_config.lr = args.lr
 __C.run_config.workers = args.workers
 __C.run_config.model_type = args.model
@@ -55,5 +56,9 @@ __C.run_config.run_mode = args.run_mode
 __C.run_config.run_id = args.run_id
 __C.run_config.best_epoch_id = args.best_epoch_id
 __C.run_config.draw_plots = bool(args.draw_plots)
+__C.run_config.weighted_meaner = bool(args.weighted_meaner)
+__C.run_config.loss_kernel = args.loss_kernel
 print(args.draw_plots, 'draw plots')
 print(args.use_spatiotemporal_encoding, 'use spt encoding')
+print(args.weighted_meaner, 'weighted meaner')
+print(args.loss_kernel, 'loss_kernel')

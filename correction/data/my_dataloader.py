@@ -38,6 +38,7 @@ class WRFDataset(Dataset):
         self.stations = None
         if station_files is not None:
             self.load_stations(station_files)
+        self.load_grid_metadata()
 
         self.seq_len = seq_len
         self.file_len = 24
@@ -50,9 +51,12 @@ class WRFDataset(Dataset):
         x, y = np.arange(0, 280, 1), np.arange(0, 210, 1)
         self.wrf_xy = np.meshgrid(x, y)
 
+    def get_date_by_datefile_id(self, datefile_id):
+        return pdl.parse(self.wrf_files[datefile_id].split('_')[-2])
+
     def get_time_encoding(self, i, frequency=1):
         datefile_id, hour = self.get_path_id(i)
-        date = pdl.parse(self.wrf_files[datefile_id].split('_')[-2])
+        date = self.get_date_by_datefile_id(datefile_id)
         day = [date.add(hours=i).day_of_year for i in range(self.seq_len)]
         day = np.array(day) / 365
         hour = np.mod(np.array(range(hour, hour + self.seq_len)), 24) / 24
@@ -68,6 +72,7 @@ class WRFDataset(Dataset):
         return day_encoded, hour_encoded
 
     def load_stations(self, station_files):
+
         names = []
         coords = []
         stations = []
@@ -76,13 +81,19 @@ class WRFDataset(Dataset):
                 measurements = pickle.load(f)
                 names.append(measurements['Name'])
                 coords.append(measurements['Coords'])
-                stations.append(measurements['Station'][3:])
-        self.stations = np.swapaxes(np.array(stations), 0, 1)
+                stations.append(measurements['Station'])
+        stations = np.swapaxes(np.array(stations), 0, 1)  # size (40369, 46, 4)
+        border_ts = [self.get_date_by_datefile_id(0).timestamp(), self.get_date_by_datefile_id(-1).timestamp()]
+        dates = stations[:, 0, 0]
+        slices = np.where((dates == border_ts[0]) | (dates == border_ts[1]))[0]
+        self.stations = stations[slices[0]:slices[1]+24]
         print(self.stations.shape, pdl.from_timestamp(self.stations[0, 0, 0]),
               pdl.from_timestamp(self.stations[-1, 0, 0]), 'stations dates range')
         coords = np.array(coords)
         coords[:, [0, 1]] = coords[:, [1, 0]]
-        self.metadata['Coords'] = coords
+        self.metadata['coords'] = coords
+
+    def load_grid_metadata(self):
         self.metadata['wrf_xx'] = np.load(os.path.join(cfg.GLOBAL.BASE_DIR, 'metadata', 'wrf_xx.npy'))
         self.metadata['wrf_yy'] = np.load(os.path.join(cfg.GLOBAL.BASE_DIR, 'metadata', 'wrf_yy.npy'))
         self.metadata['era_xx'] = np.load(os.path.join(cfg.GLOBAL.BASE_DIR, 'metadata', 'era_xx.npy'))
@@ -130,7 +141,6 @@ class WRFDataset(Dataset):
         return path_id, item_id
 
     def get_station(self, i):
-        print(self.stations.shape)
         out = self.stations[i:i + self.seq_len]
         return out
 
@@ -146,9 +156,9 @@ class WRFDataset(Dataset):
         if self.stations is not None:
             stations = self.get_station(i)
 
-            print(self.get_path_id(i), self.wrf_files[self.get_path_id(i)[0]],
-                  self.era_files[self.get_path_id(i)[0]], pdl.from_timestamp(stations[0, 0, 0]),
-                  'sample: path id, wrf name, era name, station time')
+            # print(self.get_path_id(i), self.wrf_files[self.get_path_id(i)[0]],
+            #       self.era_files[self.get_path_id(i)[0]], pdl.from_timestamp(stations[0, 0, 0]),
+            #       'sample: path id, wrf name, era name, station time')
             return data, target, stations, i
         else:
             return data, target

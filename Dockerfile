@@ -8,6 +8,7 @@ RUN pip install matplotlib
 RUN pip install pendulum
 RUN conda install -c conda-forge wrf-python=1.3.4.1
 RUN pip install transformers
+RUN pip install SciPy
 COPY . /home
 #WORKDIR /home/era_data
 #WORKDIR /home/wrf_data

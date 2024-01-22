@@ -40,8 +40,10 @@ class WRFLogger:
         self.mse = 0
         self.mse1 = 0
         self.mse2 = 0
+        self.mse3 = 0
         self.iters_counted = 0
         self.beta = None
+        self.beta2 = None
 
     def create_logger(self):
         logger = logging.getLogger(__name__)
@@ -61,25 +63,30 @@ class WRFLogger:
                 numbers.add(int(directory.split('_')[-1]))
         return max(numbers) + 1 if len(numbers) else 1
 
-    def set_beta(self, beta):
+    def set_beta(self, beta, beta2=1):
         self.beta = beta
+        self.beta2 = beta2
 
-    def accumulate_stat(self, delta_mse, mse1=None, mse2=None):
+    def accumulate_stat(self, delta_mse, mse1=None, mse2=None, mse3=None):
         self.mse += float(delta_mse)
         if mse1:
             self.mse1 += float(mse1)
         if mse2:
             self.mse2 += float(mse2)
+        if mse3:
+            self.mse3 += float(mse3)
         self.iters_counted += 1
 
     def reset_stat(self):
         self.mse = 0
         self.mse1 = 0
         self.mse2 = 0
+        self.mse3 = 0
         self.iters_counted = 0
 
     def print_stat_readable(self, epoch=None):
         beta = self.beta if self.beta else 'beta'
+        beta2 = self.beta2 if self.beta2 else 'beta2'
         if epoch:
             self.logger.info(f"Validation epoch {epoch} successful with val loss:")
         else:
@@ -90,7 +97,8 @@ class WRFLogger:
             self.loss_evolution.append(mse)
         if self.mse1 > 0 and self.mse2 > 0:
             self.logger.info(f"    MSE: {round(self.mse1 / self.iters_counted, 5)}"
-                             f" + {beta} * deltaMSE: {round(self.mse2 / self.iters_counted, 5)} ")
+                             f" + {beta} * deltaMSE: {round(self.mse2 / self.iters_counted, 5)}"
+                             f" + {beta2} * stationMSE: 0")
         self.reset_stat()
 
     def save_configuration(self):

@@ -1,6 +1,7 @@
 import sys
 sys.path.insert(0, '../../')
 import torch
+import numpy as np
 from correction.config.config import cfg
 from torch.optim import lr_scheduler
 from correction.models.loss import TurbulentMSE
@@ -10,11 +11,12 @@ from correction.data.train_test_split import split_train_val_test, find_files
 from correction.data.my_dataloader import WRFDataset
 from correction.data.scalers import StandardScaler
 from torch.utils.data import DataLoader
-from correction.test import draw_advanced_plots, test
+from correction.test import test
 from correction.train import train
 from correction.train_and_test import train_and_test
 from correction.models.build_module import build_correction_model, build_scheduler
 from correction.data.logger import WRFLogger
+from correction.helpers.interpolation import InvDistTree
 
 folder_name = cfg.run_config.model_type
 logger = WRFLogger(cfg.GLOBAL.MODEL_SAVE_DIR, folder_name)
@@ -24,8 +26,9 @@ logger = WRFLogger(cfg.GLOBAL.MODEL_SAVE_DIR, folder_name)
 
 batch_size = cfg.run_config.batch_size
 max_epochs = cfg.run_config.epochs
-beta = 0 if cfg.run_config.run_mode == 'test' else cfg.run_config.beta
-print(beta, 'beta')
+beta1 = 0 if cfg.run_config.run_mode == 'test' else cfg.run_config.beta1
+beta2 = 0 if cfg.run_config.run_mode == 'test' else cfg.run_config.beta2
+print(beta1, beta2, 'beta')
 use_spatiotemporal_encoding = cfg.run_config.use_spatiotemporal_encoding
 use_time_encoding = cfg.run_config.use_time_encoding
 LR = cfg.run_config.lr
@@ -51,11 +54,13 @@ era_scaler.apply_scaler_channel_params(torch.load(os.path.join(cfg.GLOBAL.MODEL_
 wrf_scaler.apply_scaler_channel_params(torch.load(os.path.join(cfg.GLOBAL.MODEL_SAVE_DIR, 'wrf_means')),
                                        torch.load(os.path.join(cfg.GLOBAL.MODEL_SAVE_DIR, 'wrf_stds')))
 
-train_dataset = WRFDataset(train_files[0], train_files[1], use_spatiotemporal_encoding=use_spatiotemporal_encoding,
+train_dataset = WRFDataset(train_files[0], train_files[1], station_files=station_files,
+                           use_spatiotemporal_encoding=use_spatiotemporal_encoding,
                            use_time_encoding=use_time_encoding)
 train_dataloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=cfg.run_config.workers)
 
-valid_dataset = WRFDataset(val_files[0], val_files[1], use_spatiotemporal_encoding=use_spatiotemporal_encoding,
+valid_dataset = WRFDataset(val_files[0], val_files[1], station_files=station_files,
+                           use_spatiotemporal_encoding=use_spatiotemporal_encoding,
                            use_time_encoding=use_time_encoding)
 valid_dataloader = DataLoader(valid_dataset, batch_size=batch_size, shuffle=False, num_workers=cfg.run_config.workers)
 
@@ -64,8 +69,16 @@ test_dataset = WRFDataset(test_files[0], test_files[1], station_files=station_fi
                           use_time_encoding=use_time_encoding)
 test_dataloader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False, num_workers=cfg.run_config.workers)
 
-meaner = MeanToERA5(os.path.join(cfg.GLOBAL.BASE_DIR, 'wrferaMapping.npy'))
-criterion = TurbulentMSE(meaner, beta=beta, logger=logger).to(cfg.GLOBAL.DEVICE)
+metadata = train_dataset.metadata
+era_coords = np.stack([metadata['era_xx'].flatten(), metadata['era_yy'].flatten()]).T
+wrf_coords = np.stack([metadata['wrf_xx'].flatten(), metadata['wrf_yy'].flatten()]).T
+meaner = MeanToERA5(os.path.join(cfg.GLOBAL.BASE_DIR, 'wrferaMapping.npy'),
+                    era_coords=era_coords, wrf_coords=wrf_coords,
+                    weighted=cfg.run_config.weighted_meaner)\
+    .to(cfg.GLOBAL.DEVICE)
+interpolator = InvDistTree(x=wrf_coords, q=train_dataset.metadata['coords'])
+criterion = TurbulentMSE(meaner, interpolator, beta=beta1, beta2=beta2, logger=logger, kernel_type=cfg.run_config.loss_kernel)\
+    .to(cfg.GLOBAL.DEVICE)
 
 model = build_correction_model(cfg.run_config.model_type)
 

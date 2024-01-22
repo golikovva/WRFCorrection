@@ -38,18 +38,20 @@ def train_epoch(dataloader, model, criterion, lr_scheduler, optimizer, wrf_scale
     train_loss = 0
     model.train()
 
-    for train_data, train_label in (pbar := tqdm(dataloader)):
+    for train_data, train_label, stations, _ in (pbar := tqdm(dataloader)):
         train_data = torch.swapaxes(train_data.type(torch.float).to(cfg.GLOBAL.DEVICE), 0, 1)
         train_label = torch.swapaxes(train_label.type(torch.float).to(cfg.GLOBAL.DEVICE), 0, 1)
+        stations = torch.permute(stations.type(torch.float).to(cfg.GLOBAL.DEVICE), (1, 0, 3, 2))
         train_data = wrf_scaler.channel_transform(train_data, 2)
         train_label = era_scaler.channel_transform(train_label, 2)
+        # stations = scaler.channel_transform(stations, 2)
 
         optimizer.zero_grad()
 
         output = model(train_data)
         if cfg.run_config.use_spatiotemporal_encoding:
             train_data = train_data[:, :, :3]
-        loss = criterion(train_data, output, train_label)  # , mask)
+        loss = criterion(train_data, output, train_label, stations[..., [3, 1], :], wrf_scaler)
         loss.backward()
         torch.nn.utils.clip_grad_value_(model.parameters(), clip_value=50.0)
         optimizer.step()
@@ -65,16 +67,18 @@ def eval_epoch(model, criterion, wrf_scaler, era_scaler, dataloader, logger, epo
     with torch.no_grad():
         model.eval()
         valid_loss = 0.0
-        for valid_data, valid_label in tqdm(dataloader):
+        for valid_data, valid_label, stations, _ in tqdm(dataloader):
             valid_data = torch.swapaxes(valid_data.type(torch.float).to(cfg.GLOBAL.DEVICE), 0, 1)
             valid_label = torch.swapaxes(valid_label.type(torch.float).to(cfg.GLOBAL.DEVICE), 0, 1)
+            stations = torch.permute(stations.type(torch.float).to(cfg.GLOBAL.DEVICE), (1, 0, 3, 2))
             valid_data = wrf_scaler.channel_transform(valid_data, 2)
             valid_label = era_scaler.channel_transform(valid_label, 2)
 
             output = model(valid_data)
             if cfg.run_config.use_spatiotemporal_encoding:
                 valid_data = valid_data[:, :, :3]
-            loss = criterion(valid_data, output, valid_label, logger)
+                print(valid_data.shape, output.shape, stations[..., [3, 1], :].shape)
+            loss = criterion(valid_data, output, valid_label, stations[..., [3, 1], :], wrf_scaler, logger)
             valid_loss += loss.item()
         valid_loss = valid_loss / len(dataloader)
         if logger:

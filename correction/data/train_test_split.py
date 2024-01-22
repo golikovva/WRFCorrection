@@ -5,7 +5,7 @@ from pathlib import Path
 def split_train_val_test(wrf_folder, era_folder, train_size, validation_size, test_size, stations_folder=None):
     era_files = sorted(find_files(era_folder, "era*"))
     wrf_files = sorted(find_files(wrf_folder, "wrf*"))
-    print(wrf_files[0], wrf_files[-1])
+    print(wrf_files[0], wrf_files[-1], '- wrf border dates')
     era_files, wrf_files = sync_era_wrf_dates(era_files, wrf_files)
     assert len(wrf_files) == len(era_files)
 

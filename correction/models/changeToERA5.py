@@ -2,20 +2,32 @@ import torch
 import torch.nn as nn
 from sklearn.cluster import KMeans
 import numpy as np
+from correction.helpers.interpolation import get_nearest_neighbour
+from correction.config.config import cfg
+from correction.helpers.math import gauss_function
 
 
 class MeanToERA5(nn.Module):
-    def __init__(self, mapping_file=None, era_coords=None, wrf_coords=None):
+    def __init__(self, mapping_file=None, era_coords=None, wrf_coords=None, mapping_mode='kmeans', weighted=False):
         super().__init__()
         self.mapping = None
         self.indices = None
+        self.distances = None
+        self.reverse_distance = None
+        self.weighted = weighted
+        if era_coords is not None and wrf_coords is not None:
+            self.era_coords = era_coords.copy(order='C')
+            self.wrf_coords = wrf_coords.copy(order='C')
         if mapping_file is not None:
             self.set_mapping_by_file(mapping_file)
         else:
             assert era_coords is not None and wrf_coords is not None
-            self.era_coords = era_coords.copy(order='C')
-            self.wrf_coords = wrf_coords.copy(order='C')
-            self.set_mapping_by_coords()
+            if mapping_mode == 'kmeans':
+                self.set_mapping_by_coords()
+            if mapping_mode == 'nearest':
+                self.set_mapping_by_nearest_neighbour()
+        if weighted:
+            self.calc_distances_by_coords()
 
     def set_mapping_by_file(self, mapping_file):
         self.mapping = torch.from_numpy(np.load(mapping_file))
@@ -30,11 +42,38 @@ class MeanToERA5(nn.Module):
         self.mapping = torch.from_numpy(kmeans.predict(self.wrf_coords))
         _, self.indices = self.mapping.sort(stable=True)
 
+    def set_mapping_by_nearest_neighbour(self):
+        mapping, distances = get_nearest_neighbour(torch.from_numpy(self.wrf_coords).T,
+                                                   torch.from_numpy(self.era_coords).T)
+        self.mapping, self.distances = torch.squeeze(mapping), torch.squeeze(distances)
+        _, self.indices = self.mapping.sort(stable=True)
+
+    def calc_distances_by_coords(self):
+        p1, p2 = self.wrf_coords, self.era_coords[self.mapping]
+        self.distances = torch.from_numpy(np.sqrt(np.square(p1 - p2).sum(-1)))
+        self.reverse_distance = (1 / self.distances).to(cfg.GLOBAL.DEVICE)
+        # sigma_squared = torch.square(self.distances.max())/9  # max element lies in 3*sigma
+        # self.reverse_distance = gauss_function(self.distances, sigma_squared)).to(cfg.GLOBAL.DEVICE
+
     def forward(self, output):
+        if self.weighted:
+            return self.forward_weighted(output)
+
         output = output.view(*output.shape[:-2], output.shape[-1] * output.shape[-2])
         a = []
         for lst in output[..., self.indices].split(tuple(self.mapping.unique(return_counts=True)[1]), dim=-1):
             a.append(lst.mean(-1))
+        return torch.stack(a, dim=-1)
+
+    def forward_weighted(self, output):
+        output = output.view(*output.shape[:-2], output.shape[-1] * output.shape[-2])
+        a = []
+        clusters = output[..., self.indices].split(tuple(self.mapping.unique(return_counts=True)[1]), dim=-1)
+        reverse_distances = self.reverse_distance[self.indices].split(
+            tuple(self.mapping.unique(return_counts=True)[1]), dim=-1)
+        for cluster, reverse_distance in zip(clusters, reverse_distances):
+            weighted_meaned_value = (reverse_distance * cluster).sum(-1) / reverse_distance.sum()
+            a.append(weighted_meaned_value)
         return torch.stack(a, dim=-1)
 
     def save_mapping(self, filename):

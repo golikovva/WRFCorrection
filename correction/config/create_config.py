@@ -5,7 +5,8 @@ def get_args():
     parser = argparse.ArgumentParser(description='Train the model on WRF and ERA fields')
     parser.add_argument('--epochs', '-e', metavar='E', type=int, default=50, help='Number of epochs')
     parser.add_argument('--batch-size', '-b', dest='batch_size', metavar='B', type=int, default=32, help='Batch size')
-    parser.add_argument('--beta', type=float, default=0.5, help='beta parameter for loss function')
+    parser.add_argument('--beta1', type=float, default=1.0, help='beta1 parameter for loss function')
+    parser.add_argument('--beta2', type=float, default=0.1, help='beta2 parameter for loss function')
     parser.add_argument('--learning-rate', '-l', metavar='LR', type=float, default=1e-4,
                         help='Learning rate', dest='lr')
     parser.add_argument('--workers', default=16, type=int, metavar='N',
@@ -29,8 +30,12 @@ def get_args():
                         help='if run mode is test select run id')
     parser.add_argument('--best-epoch-id', dest='best_epoch_id', type=int, default=15,
                         help='if run mode is test select best epoch id')
-    parser.add_argument('--draw_plots', type=int, default=1,
+    parser.add_argument('--draw-plots', type=int, default=1,
                         help='If draw resulting plots')
+    parser.add_argument('--weighted-meaner', type=int, default=1,
+                        help='If use weighted mean for loss function')
+    parser.add_argument('--loss-kernel', type=str, default='gauss',
+                        help='Choose loss kernel: mean, gauss')
     parser.add_argument('--running-env', type=str, default='home',
                         help='Specify where you run the script: docker, io, home')
     return parser.parse_args()

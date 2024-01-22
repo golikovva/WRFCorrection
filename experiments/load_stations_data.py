@@ -6,7 +6,7 @@ from correction.validation.tasks import (
 borey_home = cfg.GLOBAL.BASE_DIR
 
 
-start_date = '2022-09-07T21:00:00'
+start_date = '2019-01-01T00:00:00'
 end_date = '2023-08-10T00:00:00'
 
 meteostations = pd.read_csv(f'{borey_home}/metadata/meteostations.csv', comment='#')
