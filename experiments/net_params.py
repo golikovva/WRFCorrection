@@ -1,32 +1,18 @@
 import sys
 
 sys.path.insert(0, '..')
-# from correction.data.dataloader import HKOIterator
-# from correction.config import cfg
-# import torch
-from correction.config.config import cfg
-# from correction.models.forecaster import Forecaster
-# from correction.models.encoder import Encoder
-# from collections import OrderedDict
-# from correction.models.model import EF
-# from torch.optim import lr_scheduler
-# from correction.models.loss import Weighted_mse_mae
+
+from correction.config.cfg import cfg
+
 from correction.models.trajGRU import TrajGRU
-# from correction.train_and_test import train_and_test
-# import numpy as np
-# from correction.data.evaluation import *
+from correction.models.model import activation
 from correction.models.convLSTM import ConvLSTM
 from collections import OrderedDict
 
 batch_size = cfg.run_config.batch_size
 
-# IN_LEN = cfg.HKO.BENCHMARK.IN_LEN
-# OUT_LEN = cfg.HKO.BENCHMARK.OUT_LEN
-
-# build model
-# in_size = 3 if cfg.run_config.use_spatiotemporal_encoding is False else 6
-in_size = 3 + 3*cfg.run_config.use_spatiotemporal_encoding + 2*cfg.run_config.use_time_encoding
-
+in_size = 4 + 3*cfg.run_config.use_spatial_encoding + 2*cfg.run_config.use_time_encoding
+rnn_activation = activation('leaky', negative_slope=0.2, inplace=True)
 unet_params = {"n_channels": in_size,
                "n_classes": 3,
                "bilinear": True
@@ -43,16 +29,16 @@ encoder_params = [
         TrajGRU(input_channel=8, num_filter=64, b_h_w=(batch_size, 42, 56), zoneout=0.0, L=13,  # 96, 96
                 i2h_kernel=(3, 3), i2h_stride=(1, 1), i2h_pad=(1, 1),
                 h2h_kernel=(5, 5), h2h_dilate=(1, 1),
-                act_type=cfg.MODEL.RNN_ACT_TYPE),
+                act_type=rnn_activation),
 
         TrajGRU(input_channel=192, num_filter=192, b_h_w=(batch_size, 14, 14), zoneout=0.0, L=13,  # 32, 32
                 i2h_kernel=(3, 3), i2h_stride=(1, 1), i2h_pad=(1, 1),
                 h2h_kernel=(5, 5), h2h_dilate=(1, 1),
-                act_type=cfg.MODEL.RNN_ACT_TYPE),
+                act_type=rnn_activation),
         TrajGRU(input_channel=192, num_filter=192, b_h_w=(batch_size, 7, 7), zoneout=0.0, L=9,  # 16, 16
                 i2h_kernel=(3, 3), i2h_stride=(1, 1), i2h_pad=(1, 1),
                 h2h_kernel=(3, 3), h2h_dilate=(1, 1),
-                act_type=cfg.MODEL.RNN_ACT_TYPE)
+                act_type=rnn_activation)
     ]
 ]
 
@@ -72,16 +58,16 @@ forecaster_params = [
         TrajGRU(input_channel=192, num_filter=192, b_h_w=(batch_size, 7, 7), zoneout=0.0, L=13,  # 16 16
                 i2h_kernel=(3, 3), i2h_stride=(1, 1), i2h_pad=(1, 1),
                 h2h_kernel=(3, 3), h2h_dilate=(1, 1),
-                act_type=cfg.MODEL.RNN_ACT_TYPE),
+                act_type=rnn_activation),
 
         TrajGRU(input_channel=192, num_filter=192, b_h_w=(batch_size, 14, 14), zoneout=0.0, L=13,  # 32 32
                 i2h_kernel=(3, 3), i2h_stride=(1, 1), i2h_pad=(1, 1),
                 h2h_kernel=(5, 5), h2h_dilate=(1, 1),
-                act_type=cfg.MODEL.RNN_ACT_TYPE),
+                act_type=rnn_activation),
         TrajGRU(input_channel=64, num_filter=64, b_h_w=(batch_size, 42, 56), zoneout=0.0, L=9,  # 96 96
                 i2h_kernel=(3, 3), i2h_stride=(1, 1), i2h_pad=(1, 1),
                 h2h_kernel=(5, 5), h2h_dilate=(1, 1),
-                act_type=cfg.MODEL.RNN_ACT_TYPE)
+                act_type=rnn_activation)
     ]
 ]
 

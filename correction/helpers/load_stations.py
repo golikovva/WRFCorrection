@@ -14,7 +14,6 @@ from tqdm import tqdm
 
 
 def load_station_data(station, meteo_period, attempts=2, attempt_delay=0.3):
-
     page_url = f'https://rp5.ru/Weather_archive_in_{station.ref}'
     response = requests.get(page_url)
     phpsessid = response.cookies['PHPSESSID']
@@ -76,10 +75,12 @@ def load_station_data(station, meteo_period, attempts=2, attempt_delay=0.3):
     url = None
     iterator = tqdm(range(attempts), desc='attempt')
     for _ in iterator:
+        print(f'https://rp5.ru/responses/reFile{station.type.capitalize()}.php')
         response = requests.post(
             f'https://rp5.ru/responses/reFile{station.type.capitalize()}.php',
             cookies=cookies, headers=headers, data=data, verify=False
         )
+        print(response)
         # response = requests.post(url, headers=headers, data=myData, verify=False)
         match = re.search(r'<a href=(\S*) download>', response.text)
         if match is not None:
@@ -88,12 +89,30 @@ def load_station_data(station, meteo_period, attempts=2, attempt_delay=0.3):
         else:
             time.sleep(attempt_delay)
     if url is None:
-        raise RuntimeError('Was unable to obtain url from website.')
+        print('Was unable to obtain url from website. Trying to load file manually.')
+        print(os.getcwd())
+        proj_dir = os.path.normpath(os.getcwd() + os.sep + os.pardir)
+        print(proj_dir)
+        tmp_file = os.path.join(proj_dir, 'stations','ULAA.01.01.2016.10.08.2023.1.0.0.en.utf8.00000000.csv',
+                                'ULAA.01.01.2016.10.08.2023.1.0.0.en.utf8.00000000.csv')
+        station_data = pd.read_csv(tmp_file, sep=';', comment='#', encoding='latin-1', skiprows=6)
+                                # f'station_{station.tslist}_{a_date1}_{a_date2}.csv')
+        # raise RuntimeError('Was unable to obtain url from website.')
+    else:
+        tmp_file = wget.download(url)
+        station_data = pd.read_csv(tmp_file, sep=';', comment='#')
+        os.remove(tmp_file)
+    if station.type == 'synop':
+        station_data = station_data.reset_index()
+        station_data.columns = station_data.columns.tolist()[1:] + ['none']
+        station_data = station_data.drop('none', axis=1)
+    return station_data
 
-    tmp_file = wget.download(url)
+
+def manual_load_station_data(tmp_file, station_type='metar'):
     station_data = pd.read_csv(tmp_file, sep=';', comment='#')
     os.remove(tmp_file)
-    if station.type == 'synop':
+    if station_type == 'synop':
         station_data = station_data.reset_index()
         station_data.columns = station_data.columns.tolist()[1:] + ['none']
         station_data = station_data.drop('none', axis=1)

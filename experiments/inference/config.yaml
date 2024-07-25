@@ -1,0 +1,9 @@
+input_vars: ['uvmet10', 'T2', 'SEAICE']
+latitude_var: 'XLAT'
+longitude_var: 'XLONG'
+time_var: 'time'
+model_type: 'BERTunet'
+model_weights: '/app/WRFCorrection/notebooks/model_2.pth'
+means_path: '/app/WRFCorrection/metadata/means_dict'
+stds_path: '/app/WRFCorrection/metadata/stds_dict'
+device: 'cpu'

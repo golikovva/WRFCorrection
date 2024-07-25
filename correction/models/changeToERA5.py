@@ -1,20 +1,24 @@
+import time
+
 import torch
 import torch.nn as nn
 from sklearn.cluster import KMeans
 import numpy as np
 from correction.helpers.interpolation import get_nearest_neighbour
-from correction.config.config import cfg
+# from correction.config.config import cfg
 from correction.helpers.math import gauss_function
 
 
 class MeanToERA5(nn.Module):
-    def __init__(self, mapping_file=None, era_coords=None, wrf_coords=None, mapping_mode='kmeans', weighted=False):
+    def __init__(self, mapping_file=None, era_coords=None, wrf_coords=None, mapping_mode='kmeans',
+                 weighted=False, device='cpu'):
         super().__init__()
         self.mapping = None
         self.indices = None
         self.distances = None
         self.reverse_distance = None
         self.weighted = weighted
+        self.device = device
         if era_coords is not None and wrf_coords is not None:
             self.era_coords = era_coords.copy(order='C')
             self.wrf_coords = wrf_coords.copy(order='C')
@@ -51,9 +55,9 @@ class MeanToERA5(nn.Module):
     def calc_distances_by_coords(self):
         p1, p2 = self.wrf_coords, self.era_coords[self.mapping]
         self.distances = torch.from_numpy(np.sqrt(np.square(p1 - p2).sum(-1)))
-        self.reverse_distance = (1 / self.distances).to(cfg.GLOBAL.DEVICE)
+        self.reverse_distance = (1 / self.distances).to(self.device)
         # sigma_squared = torch.square(self.distances.max())/9  # max element lies in 3*sigma
-        # self.reverse_distance = gauss_function(self.distances, sigma_squared)).to(cfg.GLOBAL.DEVICE
+        # self.reverse_distance = gauss_function(self.distances, sigma_squared)).to(cfg.GLOBAL.DEVICE)
 
     def forward(self, output):
         if self.weighted:
@@ -66,23 +70,34 @@ class MeanToERA5(nn.Module):
         return torch.stack(a, dim=-1)
 
     def forward_weighted(self, output):
-        output = output.view(*output.shape[:-2], output.shape[-1] * output.shape[-2])
+        output = output.flatten(-2, -1)
         a = []
+        t1 = time.time()
         clusters = output[..., self.indices].split(tuple(self.mapping.unique(return_counts=True)[1]), dim=-1)
+        # print(time.time() - t1, 'Time spent to calc clusters')
+        t2 = time.time()
         reverse_distances = self.reverse_distance[self.indices].split(
             tuple(self.mapping.unique(return_counts=True)[1]), dim=-1)
+        # print(time.time() - t2, 'Time spent to calc reverse distances')
+        t3 = time.time()
+        # todo оптимизировать следующую операцию, она занимает большую часть (чуть ли не половину) цикла обучения!!!
         for cluster, reverse_distance in zip(clusters, reverse_distances):
             weighted_meaned_value = (reverse_distance * cluster).sum(-1) / reverse_distance.sum()
             a.append(weighted_meaned_value)
+        # print(time.time() - t3, 'Time spent to multiply cluster on rev dist')
         return torch.stack(a, dim=-1)
 
     def save_mapping(self, filename):
         np.save(filename, self.mapping)
 
+    def to(self, device):
+        self.device = device
+        if self.reverse_distance is not None:
+            self.reverse_distance = self.reverse_distance.to(device)
+        return self
+
 
 if __name__ == '__main__':
-    import netCDF4
-    from netCDF4 import Dataset
     from osgeo import gdal
 
     wrf_out_file = "C:\\Users\\Viktor\\Desktop\\wrfout_d01_2019-01-01_000000"

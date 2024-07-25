@@ -12,6 +12,7 @@ class UNet(nn.Module):
         super(UNet, self).__init__()
         self.n_channels = n_channels
         self.n_classes = n_classes
+        print('Model:', n_channels, '->', n_classes)
 
         # self.spatial_map_encode = nn.Parameter(128, 105, 140)
 

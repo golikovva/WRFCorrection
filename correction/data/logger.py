@@ -4,7 +4,7 @@ import re
 
 import numpy as np
 import torch
-from correction.config.config import cfg
+from correction.config.cfg import cfg
 import pickle
 
 
@@ -16,11 +16,11 @@ class WRFLogger:
             folder_name = 'unknown'
 
         if not os.path.exists(os.path.join(base_log_dir, folder_name)):
-            os.mkdir(os.path.join(base_log_dir, folder_name))
+            os.makedirs(os.path.join(base_log_dir, folder_name))
         self.folder_path = os.path.join(base_log_dir, folder_name)
 
         if cfg.run_config.run_mode == 'test':
-            self.experiment_number = cfg.run_config.run_id
+            self.experiment_number = cfg.test_config.run_id
         else:
             self.experiment_number = self.get_experiment_number()
 
@@ -41,9 +41,9 @@ class WRFLogger:
         self.mse1 = 0
         self.mse2 = 0
         self.mse3 = 0
+        self.mse4 = 0
         self.iters_counted = 0
-        self.beta = None
-        self.beta2 = None
+        self.betas = [1]
 
     def create_logger(self):
         logger = logging.getLogger(__name__)
@@ -63,18 +63,19 @@ class WRFLogger:
                 numbers.add(int(directory.split('_')[-1]))
         return max(numbers) + 1 if len(numbers) else 1
 
-    def set_beta(self, beta, beta2=1):
-        self.beta = beta
-        self.beta2 = beta2
+    def set_beta(self, betas):
+        self.betas = betas
 
-    def accumulate_stat(self, delta_mse, mse1=None, mse2=None, mse3=None):
-        self.mse += float(delta_mse)
+    def accumulate_stat(self, mse, mse1=None, mse2=None, mse3=None, mse4=None):  # todo покрасивее работать с бетами
+        self.mse += float(mse)
         if mse1:
             self.mse1 += float(mse1)
         if mse2:
             self.mse2 += float(mse2)
         if mse3:
             self.mse3 += float(mse3)
+        if mse4:
+            self.mse4 += float(mse4)
         self.iters_counted += 1
 
     def reset_stat(self):
@@ -82,11 +83,12 @@ class WRFLogger:
         self.mse1 = 0
         self.mse2 = 0
         self.mse3 = 0
+        self.mse4 = 0
         self.iters_counted = 0
 
-    def print_stat_readable(self, epoch=None):
-        beta = self.beta if self.beta else 'beta'
-        beta2 = self.beta2 if self.beta2 else 'beta2'
+    def print_stat_readable(self, epoch=None, reset=True):
+        betas = self.betas if self.betas is not None else 'beta'
+
         if epoch:
             self.logger.info(f"Validation epoch {epoch} successful with val loss:")
         else:
@@ -95,11 +97,21 @@ class WRFLogger:
             mse = round(self.mse / self.iters_counted, 5)
             self.logger.info(f"    MSE + deltaMSE: {mse}")
             self.loss_evolution.append(mse)
-        if self.mse1 > 0 and self.mse2 > 0:
+        if self.mse2 > 0 or self.mse3 > 0 or self.mse4 > 0:
             self.logger.info(f"    MSE: {round(self.mse1 / self.iters_counted, 5)}"
-                             f" + {beta} * deltaMSE: {round(self.mse2 / self.iters_counted, 5)}"
-                             f" + {beta2} * stationMSE: 0")
-        self.reset_stat()
+                             f" + {betas[1]} * deltaMSE: {round(self.mse2 / self.iters_counted, 5)}"
+                             f" + {betas[2]} * stationMSE: {round(self.mse3 / self.iters_counted, 5)}"
+                             f" + {betas[3]} * scatterMSE: {round(self.mse4 / self.iters_counted, 5)}")
+        if reset:
+            self.reset_stat()
+
+    def get_stat(self):
+        mse0 = self.mse / self.iters_counted
+        mse1 = self.mse1 / self.iters_counted
+        mse2 = self.mse2 / self.iters_counted
+        mse3 = self.mse3 / self.iters_counted
+        mse4 = self.mse4 / self.iters_counted
+        return mse0, mse1, mse2, mse3, mse4
 
     def save_configuration(self):
         cfg.run_id = self.experiment_number
@@ -114,7 +126,7 @@ class WRFLogger:
             self.save_dir = os.path.join(self.folder_path, f'misc_{self.experiment_number}')
             self.model_save_dir = os.path.join(self.save_dir, 'models')
             self.log_dir = os.path.join(self.save_dir, 'logs')
-            global cfg
+
             with open(os.path.join(self.save_dir, 'configuration.pkl'), 'rb') as f:
                 loaded_cfg = pickle.load(f)
                 cfg.run_config.best_epoch = loaded_cfg.run_config.best_epoch

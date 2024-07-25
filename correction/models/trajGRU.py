@@ -1,15 +1,15 @@
 import torch
 from torch import nn
-from correction.config.config import cfg
 import torch.nn.functional as F
+
 
 # input: B, C, H, W
 # flow: [B, 2, H, W]
-def wrap(input, flow):
+def wrap(input, flow, device='cpu'):
     B, C, H, W = input.size()
     # mesh grid
-    xx = torch.arange(0, W).view(1, -1).repeat(H, 1).to(cfg.GLOBAL.DEVICE)
-    yy = torch.arange(0, H).view(-1, 1).repeat(1, W).to(cfg.GLOBAL.DEVICE)
+    xx = torch.arange(0, W).view(1, -1).repeat(H, 1).to(device)
+    yy = torch.arange(0, H).view(-1, 1).repeat(1, W).to(device)
     xx = xx.view(1, 1, H, W).repeat(B, 1, 1, 1)
     yy = yy.view(1, 1, H, W).repeat(B, 1, 1, 1)
     grid = torch.cat((xx, yy), 1).float()
@@ -21,6 +21,7 @@ def wrap(input, flow):
     vgrid = vgrid.permute(0, 2, 3, 1)
     output = torch.nn.functional.grid_sample(input, vgrid)
     return output
+
 
 class BaseConvRNN(nn.Module):
     def __init__(self, num_filter, b_h_w,
@@ -47,10 +48,10 @@ class BaseConvRNN(nn.Module):
         i2h_dilate_ksize_h = 1 + (self._i2h_kernel[0] - 1) * self._i2h_dilate[0]
         i2h_dilate_ksize_w = 1 + (self._i2h_kernel[1] - 1) * self._i2h_dilate[1]
         self._batch_size, self._height, self._width = b_h_w
-        self._state_height = (self._height + 2 * self._i2h_pad[0] - i2h_dilate_ksize_h)\
+        self._state_height = (self._height + 2 * self._i2h_pad[0] - i2h_dilate_ksize_h) \
                              // self._i2h_stride[0] + 1
         self._state_width = (self._width + 2 * self._i2h_pad[1] - i2h_dilate_ksize_w) \
-                             // self._i2h_stride[1] + 1
+                            // self._i2h_stride[1] + 1
         self._curr_states = None
         self._counter = 0
 
@@ -60,7 +61,8 @@ class TrajGRU(BaseConvRNN):
     def __init__(self, input_channel, num_filter, b_h_w, zoneout=0.0, L=5,
                  i2h_kernel=(3, 3), i2h_stride=(1, 1), i2h_pad=(1, 1),
                  h2h_kernel=(5, 5), h2h_dilate=(1, 1),
-                 act_type=cfg.MODEL.RNN_ACT_TYPE):
+                 act_type=torch.tanh,
+                 device=None):
         super(TrajGRU, self).__init__(num_filter=num_filter,
                                       b_h_w=b_h_w,
                                       h2h_kernel=h2h_kernel,
@@ -70,25 +72,28 @@ class TrajGRU(BaseConvRNN):
                                       i2h_stride=i2h_stride,
                                       act_type=act_type,
                                       prefix='TrajGRU')
+        if device is None:
+            device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        self.device = device
         self._L = L
         self._zoneout = zoneout
 
         # 对应 wxz, wxr, wxh
         # reset_gate, update_gate, new_mem
         self.i2h = nn.Conv2d(in_channels=input_channel,
-                            out_channels=self._num_filter*3,
-                            kernel_size=self._i2h_kernel,
-                            stride=self._i2h_stride,
-                            padding=self._i2h_pad,
-                            dilation=self._i2h_dilate)
+                             out_channels=self._num_filter * 3,
+                             kernel_size=self._i2h_kernel,
+                             stride=self._i2h_stride,
+                             padding=self._i2h_pad,
+                             dilation=self._i2h_dilate)
 
         # inputs to flow
         self.i2f_conv1 = nn.Conv2d(in_channels=input_channel,
-                                out_channels=32,
-                                kernel_size=(5, 5),
-                                stride=1,
-                                padding=(2, 2),
-                                dilation=(1, 1))
+                                   out_channels=32,
+                                   kernel_size=(5, 5),
+                                   stride=1,
+                                   padding=(2, 2),
+                                   dilation=(1, 1))
 
         # hidden to flow
         self.h2f_conv1 = nn.Conv2d(in_channels=self._num_filter,
@@ -100,19 +105,16 @@ class TrajGRU(BaseConvRNN):
 
         # generate flow
         self.flows_conv = nn.Conv2d(in_channels=32,
-                                   out_channels=self._L * 2,
-                                   kernel_size=(5, 5),
-                                   stride=1,
-                                   padding=(2, 2))
-
+                                    out_channels=self._L * 2,
+                                    kernel_size=(5, 5),
+                                    stride=1,
+                                    padding=(2, 2))
 
         # 对应 hh, hz, hr，为 1 * 1 的卷积核
-        self.ret = nn.Conv2d(in_channels=self._num_filter*self._L,
-                                   out_channels=self._num_filter*3,
-                                   kernel_size=(1, 1),
-                                   stride=1)
-
-
+        self.ret = nn.Conv2d(in_channels=self._num_filter * self._L,
+                             out_channels=self._num_filter * 3,
+                             kernel_size=(1, 1),
+                             stride=1)
 
     # inputs: B*C*H*W
     def _flow_generator(self, inputs, states):
@@ -130,10 +132,10 @@ class TrajGRU(BaseConvRNN):
 
     # inputs 和 states 不同时为空
     # inputs: S*B*C*H*W
-    def forward(self, inputs=None, states=None, seq_len=cfg.HKO.BENCHMARK.IN_LEN):
+    def forward(self, inputs=None, states=None, seq_len=4):
         if states is None:
             states = torch.zeros((inputs.size(1), self._num_filter, self._state_height,
-                                  self._state_width), dtype=torch.float).to(cfg.GLOBAL.DEVICE)
+                                  self._state_width), dtype=torch.float).to(self.device)
         if inputs is not None:
             S, B, C, H, W = inputs.size()
             i2h = self.i2h(torch.reshape(inputs, (-1, C, H, W)))
@@ -153,7 +155,7 @@ class TrajGRU(BaseConvRNN):
             wrapped_data = []
             for j in range(len(flows)):
                 flow = flows[j]
-                wrapped_data.append(wrap(prev_h, -flow))
+                wrapped_data.append(wrap(prev_h, -flow, device=self.device))
             wrapped_data = torch.cat(wrapped_data, dim=1)
             h2h = self.ret(wrapped_data)
             h2h_slice = torch.split(h2h, self._num_filter, dim=1)
@@ -174,6 +176,3 @@ class TrajGRU(BaseConvRNN):
 
         # return torch.cat(outputs), next_h
         return torch.stack(outputs), next_h
-
-
-

@@ -1,9 +1,9 @@
 title,article,ref,lat,lon,tz,height,type,id,tslist
 Arkhangelsk,in,Arkhangelsk,64.53333333,40.56666667,+03:00,1,synop,22550,Arkhangelsk
+Arkhangelsk (airport),in,"Arkhangelsk_(airport),_METAR",64.6,40.7167,+03:00,19,metar,ULAA,ArkhangelskAir
 Sabetta (airport),in,"Sabetta_(airport),_METAR",71.2156,72.0462,+05:00,5,metar,8522,Sabetta
 Murmashi (airport),in,Murmashi_(airport),68.7838,32.7559,+03:00,48,synop,22115,Murmashi
 Seyakha,in,Seyakha,70.16666667,72.51666667,+05:00,16,synop,20967,Seyakha
-# Arkhangelsk (airport),"Arkhangelsk_(airport),_METAR",64.6,40,+03:00,19,metar,4964,ArkA
 Imeni Popova Station,at,Imeni_Popova_Station,73.333334,70.05,+05:00,6,synop,20667,PopovaSt
 Amderma,in,Amderma,69.7644,61.6853,+03:00,55,synop,23022,Amderma
 Malye Karmakuly,in,Malye_Karmakuly,72.3666667,52.7,+03:00,16,synop,20744,MKarmakuly
@@ -18,7 +18,7 @@ Sengeysky Shar,in,Sengeysky_Shar,68.35,50.783333,+03:00,4,synop,23104,SengShar
 Indiga,in,Indiga,67.65,49.03333,+03:00,1,synop,22292,Indiga
 Mikulkin (cape),in,Mikulkin_(cape),67.8,46.666667,+03:00,6,synop,22282,Mikulkin
 Shoyna,in,Shoyna,67.883333,44.13333,+03:00,16,synop,22271,Shoyna
-Nes,in,Nes,66.65,44.683333,+03:00,14,synop,22375,Nes
+# Nes,in,Nes,66.65,44.683333,+03:00,14,synop,22375,Nes
 Abramovskiy (lighthouse),in,Abramovskiy_(lighthouse),66.38333,43.25,+03:00,24,synop,22365,Abramovskiy
 Morzhovets Island,on,Morzhovets_Island,66.75,42.583333,+03:00,15,synop,22361,Morzhovets
 Zimnegorskiy (lighthouse),in,Zimnegorskiy_(lighthouse),65.466667,39.733333,+03:00,81,synop,22446,Zimnegorskiy
@@ -46,4 +46,5 @@ Petrun,in,Petrun,66.43333,60.766666,+03:00,62,synop,23324,Petrun
 Okunev Nos,in,Okunev_Nos,66.25,52.583333,+03:00,20,synop,23305,Okunev_Nos
 Kholmogory,in,Kholmogory,64.216666,41.666666,+03:00,14,synop,22559,Kholmogory
 Leshukonskoye,in,Leshukonskoye,64.9,45.766666,+03:00,66,synop,22573,Leshukonskoye
+Bolvanskiy (cape),in,Bolvanskiy_(cape),70.45,59.0666667,+03:00,13,synop,20946,Bolvanskiy
 

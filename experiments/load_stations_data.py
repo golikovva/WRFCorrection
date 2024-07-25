@@ -1,12 +1,12 @@
 import pandas as pd
-from correction.config.config import cfg
+from correction.config.cfg import cfg
 from correction.validation.tasks import (
     get_measurements
 )
-borey_home = cfg.GLOBAL.BASE_DIR
+borey_home = cfg.data.base_folder
 
 
-start_date = '2019-01-01T00:00:00'
+start_date = '2016-01-01T00:00:00'
 end_date = '2023-08-10T00:00:00'
 
 meteostations = pd.read_csv(f'{borey_home}/metadata/meteostations.csv', comment='#')
