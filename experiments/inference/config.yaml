@@ -1,0 +1,11 @@
+input_vars: ['uvmet10', 'T2', 'SEAICE', 'XLAT', 'XLONG']
+output_vars: ['U10E', 'V10E', 'T2']
+additional_vars: ['Q2', 'SWDOWN', 'GLW', 'RAINNC', 'RAINC', 'SNOWNC', 'HGT', 'PSFC']
+latitude_var: 'XLAT'
+longitude_var: 'XLONG'
+time_var: 'time'
+model_type: 'BERTunet'
+model_weights: '/home/borey_dev/weights/bertunet/model_12.pth'
+means_path: '/home/borey_dev/scaler/wrf_means_dict'
+stds_path: '/home/borey_dev/scaler/wrf_stds_dict'
+device: 'cpu'

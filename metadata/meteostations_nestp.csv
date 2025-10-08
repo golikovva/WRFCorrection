@@ -1,0 +1,240 @@
+title,article,ref,lat,lon,tz,height,type,id,tslist
+Arkhangelsk,in,Arkhangelsk,64.53333333,40.56666667,+03:00,1,synop,22550,Arkhangelsk
+"Arkhangelsk (airport)",in,"Arkhangelsk_(airport),_METAR",64.6,40.7167,+03:00,19,metar,4964,ArkhangelskAir
+Sabetta (airport),in,"Sabetta_(airport),_METAR",71.2156,72.0462,+05:00,5,metar,8522,Sabetta
+Murmashi (airport),in,Murmashi_(airport),68.7838,32.7559,+03:00,48,synop,22115,Murmashi
+Seyakha,in,Seyakha,70.16666667,72.51666667,+05:00,16,synop,20967,Seyakha
+Imeni Popova Station,at,Imeni_Popova_Station,73.333334,70.05,+05:00,6,synop,20667,PopovaSt
+Amderma,in,Amderma,69.7644,61.6853,+03:00,55,synop,23022,Amderma
+Malye Karmakuly,in,Malye_Karmakuly,72.3666667,52.7,+03:00,16,synop,20744,MKarmakuly
+Marresale,in,Marresale,69.71666667,66.8,+05:00,25,synop,23032,Marresale
+Kanin Nos (cape),on,Kanin_Nos_(cape),68.65,43.3,+03:00,49,synop,22165,KaninNos
+Bugrino,in,Bugrino,68.8,49.16,+03:00,11,synop,22193,Bugrino
+Ust-Kara,in,Ust-Kara,69.25,64.9666667,+03:00,4,synop,23029,UstKara
+Varandey,in,Varandey,68.8,58.0,+03:00,5,synop,23112,Varandey
+Konstantinovsky (cape),in,Konstantinovsky_(cape),68.55,55.5,+03:00,7,synop,23114,Konstantinovsky
+Khodovarikha,in,Khodovarikha,68.93333,53.7666667,+03:00,9,synop,23103,Khodovarikha
+Sengeysky Shar,in,Sengeysky_Shar,68.35,50.783333,+03:00,4,synop,23104,SengShar
+Indiga,in,Indiga,67.65,49.03333,+03:00,1,synop,22292,Indiga
+Mikulkin (cape),in,Mikulkin_(cape),67.8,46.666667,+03:00,6,synop,22282,Mikulkin
+Shoyna,in,Shoyna,67.883333,44.13333,+03:00,16,synop,22271,Shoyna
+Nes,in,Nes,66.65,44.683333,+03:00,14,synop,22375,Nes
+Abramovskiy (lighthouse),in,Abramovskiy_(lighthouse),66.38333,43.25,+03:00,24,synop,22365,Abramovskiy
+Morzhovets Island,on,Morzhovets_Island,66.75,42.583333,+03:00,15,synop,22361,Morzhovets
+Zimnegorskiy (lighthouse),in,Zimnegorskiy_(lighthouse),65.466667,39.733333,+03:00,81,synop,22446,Zimnegorskiy
+Mudyug,in,Mudyug,64.85,40.283333,+03:00,3,synop,22551,Mudyug
+Severodvinsk,in,Severodvinsk,64.566667,39.833333,+03:00,1,synop,22546,SevDvinsk
+Kepino,in,Kepino,65.38333,41.83333,+03:00,74,synop,22456,Kepino
+Mezen,in,Mezen,65.85,44.233333,+03:00,11,synop,22471,Mezen
+Nizhnyaya Pesha,in,Nizhnyaya_Pesha,66.75,47.766667,+03:00,7,synop,22383,NizhPesha
+Naryan-Mar,in,Naryan-Mar,67.666667,53.083333,+03:00,3,synop,23205,NMar
+Kanevka,in,Kanevka,67.13333,39.666667,+03:00,149,synop,22249,Kanevka
+Pyalitsa,in,Pyalitsa,66.18333,39.5333,+03:00,8,synop,22349,Pyalitsa
+Chavanga,in,Chavanga,66.1,37.816667,+03:00,7,synop,22339,Chavanga
+Varzuga,in,Varzuga,66.4,36.616667,+03:00,6,synop,22334,Varzuga
+Krasnoshchelye,in,Krasnoshchelye,67.35,37.05,+03:00,155,synop,22235,Krasnoshchelye
+Teriberka,in,Teriberka,69.2,35.1166667,+03:00,29,synop,22028,Teriberka
+Polarny,in,Polarny,69.2,33.4804,+03:00,13,synop,22019,Polarny
+Murmansk,in,Murmansk,68.95,33.1,+03:00,57,synop,22113,Murmansk
+Moseyevo,in,Moseyevo,65.7666,46.18333,+03:00,42,synop,22481,Moseyevo
+Lovozero,in,Lovozero,68.00,35.03333,+03:00,161,synop,22127,Lovozero
+Pinega,in,Pinega,64.7,43.38333,+03:00,31,synop,22563,Pinega
+Vorkuta (airport),in,Vorkuta_(airport),67.48333,64.01666,+03:00,172,synop,23226,Vorkuta
+Kotkino,in,Kotkino,67.01666,51.2,+03:00,18,synop,23207,Kotkino
+Khorey-Ver,in,Khorey-Ver,67.43333,58.03333,+03:00,71,synop,23215,Khorey-Ver
+Petrun,in,Petrun,66.43333,60.766666,+03:00,62,synop,23324,Petrun
+Okunev Nos,in,Okunev_Nos,66.25,52.583333,+03:00,20,synop,23305,Okunev_Nos
+Kholmogory,in,Kholmogory,64.216666,41.666666,+03:00,14,synop,22559,Kholmogory
+Leshukonskoye,in,Leshukonskoye,64.9,45.766666,+03:00,66,synop,22573,Leshukonskoye
+Bolvanskiy (cape),in,Bolvanskiy_(cape),70.45,59.0666667,+03:00,13,synop,20946,Bolvanskiy
+Novy Port,in,Novy_Port,67.68333,72.8666,+05:00,12,synop,23242,NovyPort
+Salekhard,in,Salekhard,66.531,66.668,+05:00,14,synop,23330,Salekhard
+Pitlyar,in,Pitlyar,65.8333,65.9166,+05:00,17,synop,23431,Pitlyar
+Muzhi,in,Muzhi,65.4,64.7,+05:00,9,synop,23426,Muzhi
+Yangi-Yugan,in,Yangi-Yugan,66.05,68.6833,+05:00,40,synop,23339,YangiYugan
+Nadym (airport),in,Nadym_(airport),65.4798,72.7033,+05:00,7,synop,23445,NadymAir
+Pravaya Khetta,in,Pravaya_Khetta,65.8666,74.5,+05:00,54,synop,23443,PravayaKhetta
+Nyda,in,Nyda,66.6166,72.95,+05:00,10,synop,23345,Nyda
+Novy Urengoy (airport),in,Novy_Urengoy_(airport),66.07,76.5166,+05:00,62,synop,23358,NovyUrengoyAirport
+Urengoy,in,Urengoy,65.9666,78.3666,+05:00,13,synop,23453,Urengoy
+Tarko-Sale,in,Tarko-Sale,64.9166,77.8166,+05:00,27,synop,23552,TarkoSale
+Tazovsky,in,Tazovsky,67.4666,78.7166,+05:00,23,synop,23256,Tazovsky
+Antipayuta,in,Antipayuta,69.1,76.8666,+05:00,3,synop,23058,Antipayuta
+Krasnoselkup,in,Krasnoselkup,65.7,82.4666,+05:00,19,synop,23465,Krasnoselkup
+Sopochnaya Karga,in,Sopochnaya_Karga,71.8666,82.7,+07:00,5,synop,20871,SopochnayaKarga
+Karaul,in,Karaul,70.0666,83.2,+07:00,18,synop,20978,Karaul
+Potapovo,in,Potapovo,68.6833,86.2833,+07:00,43,synop,23174,Potapovo
+Igarka (airport),in,Igarka_(airport),67.45,86.6166,+07:00,24,synop,23274,IgarkaAir
+# Turukhansk,in,Turukhansk,65.8,87.9666,+07:00,35,synop,23472,Turukhansk
+# Vereshchagino,in,"Vereshchagino,_Krasnoyarsk_kray",64.2333,87.4666,+07:00,30,synop,23578,Vereshchagino
+Svetlogorsk,in,Svetlogorsk,66.95,88.4166,+07:00,101,synop,23376,Svetlogorsk
+Khantayskoye Lake,in,Khantayskoye_Lake,68.2,90.0333,+07:00,91,synop,23179,Khantayskoye
+Norilsk,in,Norilsk,69.3333,88.2167,+07:00,65,synop,23078,Norilsk
+Norilsk (airport),in,"Norilsk_(airport),_METAR",69.3167,87.3167,+07:00,162,metar,4989,NorilskAir
+Dikson,in,Dikson,73.5,80.4,+07:00,47,synop,20674,Dikson
+Troynoy Island,on,Troynoy_Island,75.9166,83.00,+07:00,12,synop,20471,TroynoyIsland
+Sterlegov (cape),in,Sterlegov_(cape),75.4,88.7833,+07:00,10,synop,20476,Sterlegov
+Heiss Island,on,Heiss_Island,80.6166,58.05,+05:00,20,synop,20046,HeissIsland
+Vize Island,on,Vize_Island,79.5,76.9833,+07:00,10,synop,20069,VizeIsland
+Golomyanny Island,on,Golomyanny_Island,79.55,90.6166,+07:00,8,synop,20087,GolomyannyIsland
+Cape Celjuskin,in,Cape_Celjuskin,77.71,104.3,+07:00,13,synop,20292,CapeCeljuskin
+Khatanga (airport),in,Khatanga_(airport),71.9666,102.4769,+07:00,47,synop,20891,KhatangaAirport
+Volochanka,in,Volochanka,70.9833,94.55,+07:00,37,synop,20982,Volochanka
+# Tura,in,Tura,64.2693,100.217,+07:00,191,synop,24507,Tura
+Anabar,in,Anabar,73.2166,113.5,+09:00,13,synop,21608,Anabar
+Saskylakh,in,Saskylakh,71.9666,114.1,+09:00,28,synop,21802,Saskylakh
+Zhilinda,in,Zhilinda,70.1333,113.9666,+09:00,62,synop,21908,Zhilinda
+# Olenyok,in,Olenyok,68.5,112.4666,+09:00,220,synop,24125,Olenyok
+# Suhana,in,Suhana,68.6166,118.3333,+09:00,77,synop,24136,Suhana
+Ust-Olenek,in,Ust-Olenek,72.9666,119.7,+09:00,21,synop,21711,UstOlenek
+Tyumeti,in,Tyumeti,71.9166,123.45,+09:00,27,synop,21813,Tyumeti
+Stolb Island,on,Stolb_Island,72.4166,126.5,+09:00,20,synop,21721,StolbIsland
+Tas-Ary,in,Tas-Ary,71.8333,127.3333,+09:00,18,synop,21821,TasAry
+Tiksi (airport),in,Tiksi_(airport),71.6975,128.903,+09:00,8,synop,21824,TiksiAir
+Kyusyur,in,Kyusyur,70.6833,127.4,+09:00,39,synop,21921,Kyusyur
+# Dzhardzhan,in,Dzhardzhan,68.7333,124.00,+09:00,45,synop,24143,Dzhardzhan
+# Zhigansk,in,Zhigansk,66.7666,123.3666,+09:00,57,synop,24343,Zhigansk
+# Yarolin,in,Yarolin,67.1333,108.5333,+09:00,236,synop,24219,Yarolin
+# Polyarny (airport),in,Polyarny_(airport),66.4,112.0333,+09:00,501,synop,24322,PolyarnyAir
+# Shelagontsy,in,Shelagontsy,66.25,114.2833,+09:00,235,synop,24329,Shelagontsy
+# Eyik,in,Eyik,66.0333,117.4,+09:00,304,synop,24338,Eyik
+Kotelny Island,on,Kotelny_Island,76.00,137.8833,+07:00,8,synop,21432,KotelnyIsland
+Sannikov Strait,in,Sannikov_Strait,74.6666,138.9166,+07:00,17,synop,21535,SannikovStrait
+Kigilyakh (cape),in,Kigilyakh_(cape),73.35,139.8833,+07:00,25,synop,21636,Kigilyakh
+Yubileynaya,in,Yubileynaya,70.75,136.1666,+10:00,24,synop,21931,Yubileynaya
+Ust-Kuyga,in,Ust-Kuyga,70.0166,135.5333,+10:00,92,synop,21937,UstKuyga
+# Batagay-Alyta,in,Batagay-Alyta,67.8,130.4166,+10:00,495,synop,24261,BatagayAlyta
+# Verkhoyansk,in,Verkhoyansk,67.55,133.3833,+10:00,137,synop,24266,Verkhoyansk
+# Batagay,in,Batagay,67.65,134.65,+10:00,212,synop,24263,Batagay
+Deputatsky,in,Deputatsky,69.3166,139.95,+10:00,285,synop,24076,Deputatsky
+Belaya Gora,in,Belaya_Gora,68.5333,146.2,+11:00,48,synop,24194,BelayaGora
+Chokurdakh (airport),in,Chokurdakh_(airport),70.6166,147.8833,+11:00,29,synop,21946,ChokurdakhAir
+# Ust-Moma,in,Ust-Moma,66.45,143.2333,+11:00,196,synop,24382,UstMoma
+Andryushkino,in,Andryushkino,69.1666,154.5,+11:00,16,synop,25017,Andryushkino
+# Zyryanka,in,Zyryanka,65.7333,150.8833,+11:00,44,synop,25400,Zyryanka
+Srednekolymsk,in,Srednekolymsk,67.45,153.6833,+11:00,17,synop,25206,Srednekolymsk
+Kolymskoye,in,Kolymskoye,68.7333,158.7333,+11:00,15,synop,25121,Kolymskoye
+Cherskiy,in,Cherskiy,68.75,161.3333,+11:00,31,synop,25123,Cherskiy
+Ambarchik Bay,in,Ambarchik_Bay,69.6166,162.3,+11:00,23,synop,25034,AmbarchikBay
+Ayon,in,Ayon,69.935,167.987,+12:00,3,synop,25042,Ayon
+Rauchua,in,Rauchua,69.5,166.5666,+12:00,6,synop,25044,Rauchua
+Chaun,in,Chaun,68.8,170.6666,+12:00,6,synop,25151,Chaun
+Pevek (weather station),in,Pevek_(weather_station),69.7879,170.59399,+12:00,3,synop,25051,Pevek
+Valkarkay,in,Valkarkay,70.0833,170.9166,+12:00,6,synop,21978,Valkarkay
+Ostrovnoye,in,Ostrovnoye,68.1166,164.1666,+12:00,94,synop,25138,Ostrovnoye
+Bilibino,in,Bilibino,68.05,166.4333,+12:00,276,synop,25147,Bilibino
+Baimka,in,Baimka,66.5666,164.25,+12:00,280,synop,25335,Baimka
+Ilirney,in,Ilirney,67.25,167.9666,+12:00,353,synop,25248,Ilirney
+Mukhomornoye,in,Mukhomornoye,66.3833,173.3333,+12:00,77,synop,25356,Mukhomornoye
+Omolon,in,Omolon,64.2333,160.5333,+12:00,265,synop,25428,Omolon
+Markovo,in,Markovo,64.6833,170.4166,+12:00,33,synop,25551,Markovo
+Kanchalan,in,Kanchalan,65.1833,176.75,+12:00,26,synop,25469,Kanchalan
+Anadyr,in,Anadyr,64.7333,177.5166,+12:00,62,synop,25563,Anadyr
+Anadyr / Ugolnye Kopi (airport),in,"Anadyr,_Ugolnye_Kopi_(airport),_METAR",64.735,177.742,+12:00,59,metar,4932,AnadyrUgolnyeKopi
+Tanyurer,in,Tanyurer,64.8666,174.4166,+12:00,8,synop,25561,Tanyurer
+Cape Uelen,in,Cape%C2%A0Uelen,66.1666,-169.8333,+12:00,7,synop,25399,CapeUelen
+Nome (airport),in,Nome_(airport),64.5122,-165.44501,-09:00,11,synop,70200,NomeAir
+Savoonga (airport),in,"Savoonga_(airport),_METAR",63.6864,-170.493,-09:00,16,metar,4327,SavoongaAir
+Teller (airport),in,"Teller_(airport),_METAR",65.2403,-166.339,-09:00,90,metar,4343,TellerAir
+Kotzebue (airport),in,"Kotzebue_(airport),_METAR",66.8847,-162.599,-09:00,4,metar,4313,KotzebueAir
+Wrangel Island,on,Wrangel_Island,70.9833,-178.4333,+12:00,3,synop,21982,WrangelIsland
+# Kvitoya Island,on,Kvitoya_Island,80.1,31.4,+01:00,16,synop,1011,KvitoyaIsland
+Unskiy Mayak,in,Unskiy_Mayak,64.8333,38.4,+03:00,5,synop,22541,UnskiyMayak
+Zhizhgin,in,Zhizhgin,65.2,36.8166,+03:00,18,synop,22438,Zhizhgin
+Onega,in,Onega,63.9,38.1166,+03:00,8,synop,22641,Onega
+Kolezhma,in,Kolezhma,64.2333,35.8833,+03:00,6,synop,22529,Kolezhma
+Raznavolok,in,Raznavolok,64.5666,34.9166,+03:00,9,synop,22525,Raznavolok
+Solovetsky,in,Solovetsky,65.0333,35.7166,+03:00,7,synop,22429,Solovetsky
+Kem-Port,in,Kem-Port,64.9972,34.7907,+03:00,2,synop,22520,KemPort
+Engozero,in,Engozero,65.7833,33.9333,+03:00,80,synop,22413,Engozero
+Kovda,in,Kovda,66.7,32.8833,+03:00,17,synop,22312,Kovda
+Kandalaksha,in,Kandalaksha,67.15,32.4166,+03:00,32,synop,22217,Kandalaksha
+Umba,in,Umba,66.6833,34.35,+03:00,40,synop,22324,Umba
+Apatitovaya,in,Apatitovaya,67.5508,33.3622,+03:00,134,synop,22213,Apatitovaya
+"Zasheyek, Murmansk region",in,"Zasheyek,_Murmansk_region",67.4166,32.55,+03:00,151,synop,22214,Zasheyek
+Monchegorsk,in,Monchegorsk,67.9667,32.8833,+03:00,133,synop,22212,Monchegorsk
+Verkhnetulomskiy,in,Verkhnetulomskiy,68.6,31.85,+03:00,63,synop,22106,Verkhnetulomskiy
+Ura-Guba,in,Ura-Guba,69.2833,32.8,+03:00,27,synop,22018,UraGuba
+Vayda Guba,in,Vayda_Guba,69.9333,31.9833,+03:00,8,synop,22003,VaydaGuba
+Nickel,in,Nickel,69.4,30.2,+03:00,92,synop,22004,Nickel
+Yaniskoski,in,Yaniskoski,68.9666,28.7833,+03:00,101,synop,22101,Yaniskoski
+Alakurtti,in,Alakurtti,66.9667,30.35,+03:00,155,synop,22300,Alakurtti
+Zarechensk,in,Zarechensk,66.6841,31.4317,+03:00,42,synop,22302,Zarechensk
+Kalevala,in,Kalevala,65.2166,31.1667,+03:00,112,synop,22408,Kalevala
+Yushkozero,in,Yushkozero,64.75,32.116,+03:00,97,synop,22511,Yushkozero
+Reboly,in,Reboly,63.8333,30.8166,+03:00,181,synop,22602,Reboly
+Rugozero,in,Rugozero,64.0833,32.7833,+03:00,159,synop,22518,Rugozero
+Segezha,in,Segezha,63.75,34.3,+03:00,101,synop,22621,Segezha
+Padany,in,Padany,63.2666,33.4166,+03:00,128,synop,22619,Padany
+Medvezhyegorsk,in,Medvezhyegorsk,62.9105,34.435,+03:00,80,synop,22721,Medvezhyegorsk
+Kalgachikha,in,Kalgachikha,63.3333,36.7333,+03:00,181,synop,22638,Kalgachikha
+Turchasovo,in,Turchasovo,63.1166,39.2333,+03:00,35,synop,22648,Turchasovo
+Yemetsk,in,Yemetsk,63.4833,41.8,+03:00,28,synop,22656,Yemetsk
+Bereznik,in,Bereznik,62.85,42.75,+03:00,19,synop,22762,Bereznik
+Karpogory,in,Karpogory,64.00,44.45,+03:00,61,synop,22671,Karpogory
+Sura,in,Sura,63.5833,45.6333,+03:00,66,synop,22676,Sura
+Koynas,in,Koynas,64.75,47.65,+03:00,62,synop,22583,Koynas
+Vendinga,in,Vendinga,63.45,47.9166,+03:00,81,synop,22686,Vendinga
+Koslan,in,Koslan,63.45,48.9,+03:00,115,synop,22695,Koslan
+Ust-Tsylma,in,Ust-Tsylma,65.4333,52.1666,+03:00,70,synop,23405,UstTsylma
+Izhma,in,Izhma,65.0166,53.9166,+03:00,38,synop,23503,Izhma
+Ukhta (airport),in,Ukhta_(airport),63.5666,53.8,+03:00,141,synop,23606,UkhtaAir
+Pechora,in,Pechora,65.15,57.2333,+03:00,61,synop,23418,Pechora
+Saranpaul,in,Saranpaul,64.25,60.9333,+05:00,29,synop,23527,Saranpaul
+Sosva,in,Sosva,63.65,62.1,+05:00,27,synop,23625,Sosva
+Harp,in,Harp,66.8,65.8166,+05:00,76,synop,23237,Harp
+Berezovo,in,Berezovo,63.9333,65.05,+05:00,27,synop,23631,Berezovo
+Kazym,in,Kazym,63.7166,67.2333,+05:00,28,synop,23632,Kazym
+YuilSk,in,YuilSk,63.6666,69.65,+05:00,86,synop,23635,YuilSk
+Kamenskoye,in,Kamenskoye,62.4672,166.213,+12:00,40,synop,25745,Kamenskoye
+Slautnoye,in,Slautnoye,63.1666,167.9833,+12:00,35,synop,25648,Slautnoye
+Apuka,in,Apuka,60.4402,169.619,+12:00,4,synop,25956,Apuka
+Nyaksimvol,in,Nyaksimvol,62.4333,60.8666,+05:00,50,synop,23724,Nyaksimvol
+Oktyabrskoye,in,Oktyabrskoye,62.4666,66.0166,+05:00,60,synop,23734,Oktyabrskoye
+Unyugan,in,Unyugan,61.95,64.9333,+05:00,111,synop,23823,Unyugan
+Khanty-Mansiysk (airport),in,"Khanty-Mansiysk_(airport),_METAR",61.0333,69.1,+05:00,42,metar,5006,KhantyMansiysk
+Sytomino,in,Sytomino,61.3,71.3,+05:00,40,synop,23847,Sytomino
+# Surgut (airport),in,"Surgut_(airport),_METAR",61.35,73.4,+05:00,57,metar,5012,SurgutAir
+"Altai, Russia",in,"Altai,_Russia",60.3333,68.95,+05:00,30,synop,23939,AltaiRussia
+Leushi,in,Leushi,59.6166,65.7166,+05:00,72,synop,28064,Leushi
+Shaim,in,Shaim,60.3166,64.2166,+05:00,53,synop,23929,Shaim
+Yugorsk,in,Yugorsk,61.3166,63.3333,+05:00,113,synop,23822,Yugorsk
+Kuminsky,in,Kuminsky,58.8,65.9666,+05:00,81,synop,28165,Kuminsky
+Tabory,in,Tabory,58.5166,64.55,+05:00,73,synop,28158,Tabory
+Verkhoturye,in,Verkhoturye,58.8666,60.8,+05:00,116,synop,28144,Verkhoturye
+Gary,in,Gary,59.4333,62.35,+05:00,131,synop,28049,Gary
+Serov,in,Serov,59.6,60.5333,+05:00,132,synop,28044,Serov
+Ivdel,in,Ivdel,60.7,60.4333,+05:00,81,synop,23921,Ivdel
+Nizhny_Tagil,in,Nizhny_Tagil,57.9,60.05,+05:00,260,synop,28240,NizhnyTagil
+Yekaterinburg,in,Yekaterinburg,56.8333,60.6333,+05:00,281,synop,28440,Yekaterinburg
+Biser,in,Biser,58.5166,58.85,+05:00,463,synop,28138,Biser
+Cherdyn,in,Cherdyn,60.4,56.4833,+05:00,206,synop,23914,Cherdyn
+Gayny,in,Gayny,60.2833,54.35,+05:00,198,synop,23909,Gayny
+Yaksha,in,Yaksha,61.8333,56.8666,+03:00,131,synop,23812,Yaksha
+Ust-Kulom,in,Ust-Kulom,61.6833,53.6833,+03:00,139,synop,23803,UstKulom
+Ust-Shchuger,in,Ust-Shchuger,64.2666,57.6166,+03:00,75,synop,23518,UstShchuger
+Troitsko-Pechorsk,in,Troitsko-Pechorsk,62.7,56.2,+03:00,139,synop,23711,TroitskoPechorsk
+Bolshelug,in,Bolshelug,62.1333,52.5,+03:00,109,synop,23708,Bolshelug
+Syktyvkar (airport),in,"Syktyvkar_(airport),_METAR",61.647,50.8451,+03:00,105,metar,5046,SyktyvkarAir
+Veslyana,in,Veslyana,62.9833,50.9,+03:00,94,synop,23701,Veslyana
+Yarensk,in,Yarensk,62.1666,49.1166,+03:00,92,synop,22798,Yarensk
+Verkhnyaya Toyma,in,Verkhnyaya_Toyma,62.2333,45.0166,+03:00,53,synop,22778,VerkhnyayaToyma
+Shenkursk,in,Shenkursk,62.1,42.9,+03:00,50,synop,22768,Shenkursk
+Konevo,in,Konevo,62.1333,39.3333,+03:00,100,synop,22749,Konevo
+Anvik (airport),in,"Anvik_(airport),_METAR",62.6467,-160.19099,-09:00,94,metar,4307,AnvikAir
+St. Michael (airport),in,"St._Michael_(airport),_METAR",63.49,-162.11,-09:00,30,metar,4296,StMichaelAir
+Shageluk (airport),in,"Shageluk_(airport),_METAR",62.6923,-159.569,-09:00,24,metar,5762,ShagelukAir
+Unalakleet (airport),in,"Unalakleet_(airport),_METAR",63.8883,-160.799,-09:00,6,metar,4349,UnalakleetAir
+Kaltag (airport),in,"Kaltag_(airport),_METAR",64.3189,-158.741,-09:00,55,metar,4285,KaltagAir
+Ruby (airport),in,"Ruby_(airport),_METAR",64.7272,-155.47,-09:00,201,metar,4326,RubyAir
+Tanana (airport),in,"Tanana_(airport),_METAR",65.1744,-152.10899,-09:00,72,metar,4341,TananaAir
+Huslia (airport),in,"Huslia_(airport),_METAR",65.6978,-156.351,-09:00,65,metar,4263,HusliaAir
+Bettles (airport),in,"Bettles_(airport),_METAR",66.9166,-151.5166,-09:00,191,metar,4225,BettlesAir
+Shungnak (airport),in,"Shungnak_(airport),_METAR",66.8881,-157.162,-09:00,60,metar,4255,Shungnakir
+Selawik (airport),in,"Selawik_(airport),_METAR",66.6,-159.98599,-09:00,5,metar,4332,SelawikAir
+Robert Bob Curtis Memorial (airport),in,"Robert_Bob_Curtis_Memorial_(airport),_METAR",66.8175,-161.022,-09:00,17,metar,4362,RobertBobCurtisMemorialAir
+Kiana (airport),in,"Kiana_(airport),_METAR",66.9758,-160.437,-09:00,51,metar,4270,KianaAir
+Red Dog Mine (airport),in,"Red_Dog_Mine_(airport),_METAR",68.0321,-162.899,-09:00,295,metar,4232,RedDogMineAir
+Barrow (airport),in,"Barrow_(airport),_METAR",71.2856,-156.766,-09:00,13,metar,4224,BarrowAir
+Alpine Airstrip (airport),in,"Alpine_Airstrip_(airport),_METAR",70.3442,-150.94501,-09:00,5,metar,4290,AlpineAirstripAir
+Nuiqsut (airport),in,"Nuiqsut_(airport),_METAR",70.21,-151.006,-09:00,12,metar,4323,NuiqsutAir
